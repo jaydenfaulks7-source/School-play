@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080808">
+<title>SchoolPlay | Games, Movies & Videos</title>
+<style>
+:root {
+  --bg: #080808;
+  --panel: #141414;
+  --panel-hover: #1d1111;
+  --red: #e50914;
+  --red-bright: #ff3030;
+  --text: #fff;
+  --muted: #aaa;
+  --border: #292929;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.5;
+}
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #101010;
+  border-bottom: 2px solid var(--red);
+  padding: 16px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.logo { color: var(--red-bright); font-size: 27px; font-weight: 800; letter-spacing: .5px; }
+nav { display: flex; gap: 8px; flex-wrap: wrap; }
+button, input { font: inherit; }
+nav button, .search-button {
+  background: transparent;
+  color: white;
+  border: 1px solid #383838;
+  padding: 9px 13px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+nav button:hover, nav button:focus-visible { background: var(--red); border-color: var(--red); }
+.hero {
+  text-align: center;
+  padding: 62px 20px;
+  background: radial-gradient(ellipse at top, #2b0808 0%, #080808 68%);
+}
+.hero h1 { font-size: clamp(32px, 6vw, 48px); margin-bottom: 8px; }
+.hero h1 span { color: var(--red-bright); }
+.hero p { color: var(--muted); margin-bottom: 22px; }
+.search {
+  width: min(520px, 94%);
+  padding: 13px 15px;
+  background: #151515;
+  border: 1px solid #444;
+  border-radius: 10px;
+  color: white;
+  outline: none;
+}
+.search:focus { border-color: var(--red); }
+main { max-width: 1200px; margin: auto; padding: 26px 22px; }
+section { margin-bottom: 44px; scroll-margin-top: 95px; }
+.section-title {
+  font-size: 25px;
+  margin-bottom: 18px;
+  padding-left: 12px;
+  border-left: 4px solid var(--red);
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(205px, 1fr));
+  gap: 16px;
+}
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  transition: transform .18s ease, border-color .18s ease, background .18s ease;
+}
+.card:hover { border-color: var(--red); background: var(--panel-hover); transform: translateY(-3px); }
+.card h3 { margin-bottom: 7px; }
+.card p { color: var(--muted); margin-bottom: 16px; }
+.card a, .action {
+  display: inline-block;
+  background: var(--red);
+  color: white;
+  text-decoration: none;
+  border: 0;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.card a:hover, .action:hover { background: var(--red-bright); }
+.game-box {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  text-align: center;
+}
+#gameStatus { color: var(--red-bright); margin: 12px 0; }
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(60px, 82px));
+  justify-content: center;
+  gap: 8px;
+}
+.cell {
+  height: 78px;
+  font-size: 30px;
+  color: white;
+  background: #222;
+  border: 1px solid #444;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.cell:hover { background: #333; }
+.reset { margin-top: 18px; }
+.youtube-form { display: flex; flex-wrap: wrap; gap: 10px; }
+.youtube-form .search { flex: 1; min-width: 180px; width: auto; }
+.no-results { color: var(--muted); padding: 12px 0; display: none; }
+footer { text-align: center; color: #777; border-top: 1px solid #222; padding: 25px 15px; }
+@media (max-width: 600px) {
+  header { justify-content: center; }
+  nav { justify-content: center; }
+  .hero { padding: 45px 16px; }
+  main { padding: 22px 15px; }
+}
+
+/* Extra SchoolPlay effects */
+:root {
+  --glow: 0 0 18px rgba(229, 9, 20, .22);
+}
+body {
+  background:
+    radial-gradient(circle at 15% 18%, rgba(229, 9, 20, .09), transparent 28%),
+    radial-gradient(circle at 85% 72%, rgba(255, 48, 48, .07), transparent 30%),
+    var(--bg);
+  background-attachment: fixed;
+}
+.logo {
+  text-shadow: 0 0 12px rgba(255, 48, 48, .55);
+  animation: logoPulse 3s ease-in-out infinite;
+}
+@keyframes logoPulse {
+  0%, 100% { text-shadow: 0 0 8px rgba(255, 48, 48, .35); }
+  50% { text-shadow: 0 0 20px rgba(255, 48, 48, .85); }
+}
+header { backdrop-filter: blur(12px); background: rgba(16, 16, 16, .92); }
+.hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(229, 9, 20, .25), transparent 65%),
+    linear-gradient(180deg, #140606, #080808 90%);
+}
+.hero::before, .hero::after {
+  content: "";
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  border: 1px solid rgba(255, 48, 48, .14);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: orbit 18s linear infinite;
+}
+.hero::before { left: -90px; top: -130px; }
+.hero::after { right: -110px; bottom: -160px; animation-direction: reverse; }
+@keyframes orbit { to { transform: rotate(360deg) scale(1.15); } }
+.hero > * { position: relative; z-index: 1; }
+.card, .game-box {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .22);
+  transform: translateY(0);
+  transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease, background .25s ease;
+}
+.card:hover, .card:focus-within {
+  transform: translateY(-7px) scale(1.015);
+  box-shadow: var(--glow), 0 16px 32px rgba(0, 0, 0, .35);
+}
+.card a, .action, nav button, .cell {
+  transition: transform .16s ease, box-shadow .2s ease, background .2s ease;
+}
+.card a:hover, .action:hover, nav button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 16px rgba(229, 9, 20, .35);
+}
+button:active, .card a:active { transform: scale(.96); }
+.search:focus {
+  box-shadow: 0 0 0 3px rgba(229, 9, 20, .18), 0 0 18px rgba(229, 9, 20, .18);
+}
+.section-title { text-shadow: 0 0 14px rgba(229, 9, 20, .16); }
+.cell:not(:disabled):hover {
+  transform: scale(1.06);
+  border-color: var(--red-bright);
+  box-shadow: 0 0 15px rgba(229, 9, 20, .25);
+}
+.cell:disabled:not([aria-label*="X"]):not([aria-label*="O"]) { cursor: default; }
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .55s ease, transform .55s ease;
+}
+.reveal.is-visible { opacity: 1; transform: translateY(0); }
+#backToTop {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 20;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #5b2020;
+  border-radius: 50%;
+  color: white;
+  background: rgba(229, 9, 20, .92);
+  box-shadow: 0 0 20px rgba(229, 9, 20, .25);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity .2s ease, transform .2s ease, visibility .2s;
+}
+#backToTop.show { opacity: 1; visibility: visible; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+}
+
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">SchoolPlay</div>
+  <nav aria-label="Main navigation">
+    <button type="button" onclick="goTo('games')">Games</button>
+    <button type="button" onclick="goTo('movies')">Movies</button>
+    <button type="button" onclick="goTo('youtube')">YouTube</button>
+    <button type="button" onclick="goTo('minigame')">Mini-game</button>
+  </nav>
+</header>
+
+<div class="hero">
+  <h1>Welcome to <span>SchoolPlay</span></h1>
+  <p>Your games, movies, and videos dashboard.</p>
+  <input class="search" id="siteSearch" type="search"
+         placeholder="Search games, movies, and videos..."
+         aria-label="Search cards" oninput="searchCards()">
+</div>
+
+<main>
+  <section id="games">
+    <h2 class="section-title">🎮 Games</h2>
+    <div class="grid">
+      <article class="card searchable"><h3>2048</h3><p>Combine tiles and reach 2048.</p><a href="https://play2048.co/" target="_blank" rel="noopener noreferrer">Play 2048 →</a></article>
+      <article class="card searchable"><h3>Google Snake</h3><p>Play the classic snake game.</p><a href="https://www.google.com/fbx?fbx=snake_arcade" target="_blank" rel="noopener noreferrer">Play Snake →</a></article>
+      <article class="card searchable"><h3>CrazyGames</h3><p>Browse a wide selection of browser games.</p><a href="https://www.crazygames.com/" target="_blank" rel="noopener noreferrer">Browse Games →</a></article>
+      <article class="card searchable"><h3>Coolmath Games</h3><p>Find puzzles and strategy games.</p><a href="https://www.coolmathgames.com/" target="_blank" rel="noopener noreferrer">Play Games →</a></article>
+      <article class="card searchable"><h3>Scratch</h3><p>Play and create games made by the community.</p><a href="https://scratch.mit.edu/explore/projects/games/" target="_blank" rel="noopener noreferrer">Explore Scratch →</a></article>
+      <article class="card searchable"><h3>Miniclip</h3><p>Explore online arcade-style games.</p><a href="https://www.miniclip.com/" target="_blank" rel="noopener noreferrer">Visit Miniclip →</a></article>
+      <article class="card searchable"><h3>itch.io Games</h3><p>Discover indie games and browser titles.</p><a href="https://itch.io/games" target="_blank" rel="noopener noreferrer">Explore Games →</a></article>
+      <article class="card searchable"><h3>Tic-Tac-Toe</h3><p>Play a two-player game right on this page.</p><button class="action" onclick="goTo('minigame')">Play Here →</button></article>
+    </div>
+    <p class="no-results" id="gamesNoResults">No matching game cards.</p>
+  </section>
+
+  <section id="movies">
+    <h2 class="section-title">🎬 Movies & Streaming</h2>
+    <div class="grid">
+      <article class="card searchable"><h3>YouTube Movies</h3><p>Browse movies available through YouTube.</p><a href="https://www.youtube.com/movies" target="_blank" rel="noopener noreferrer">Browse Movies →</a></article>
+      <article class="card searchable"><h3>Tubi</h3><p>Explore free, ad-supported streaming.</p><a href="https://tubitv.com/" target="_blank" rel="noopener noreferrer">Open Tubi →</a></article>
+      <article class="card searchable"><h3>Pluto TV</h3><p>Explore free streaming channels and shows.</p><a href="https://pluto.tv/" target="_blank" rel="noopener noreferrer">Open Pluto TV →</a></article>
+    </div>
+    <p class="no-results" id="moviesNoResults">No matching movie cards.</p>
+  </section>
+
+  <section id="youtube">
+    <h2 class="section-title">▶️ YouTube</h2>
+    <div class="card">
+      <h3>Search YouTube</h3>
+      <p>Search for videos, music, tutorials, and more.</p>
+      <form class="youtube-form" onsubmit="youtubeSearch(event)">
+        <input class="search" id="youtubeQuery" type="search" placeholder="What do you want to watch?" required aria-label="YouTube search">
+        <button class="action" type="submit">Search YouTube →</button>
+      </form>
+    </div>
+  </section>
+
+  <section id="minigame">
+    <h2 class="section-title">🕹️ Tic-Tac-Toe</h2>
+    <div class="game-box">
+      <p id="gameStatus" aria-live="polite">Player X's turn</p>
+      <div class="board" id="board" aria-label="Tic-Tac-Toe board"></div>
+      <button class="action reset" type="button" onclick="resetGame()">Restart Game</button>
+    </div>
+  </section>
+</main>
+
+<footer>
+  SchoolPlay © 2026<br>
+  A simple entertainment and learning dashboard.
+</footer>
+
+<script>
+function goTo(id) {
+  const section = document.getElementById(id);
+  if (section) section.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function searchCards() {
+  const query = document.getElementById("siteSearch").value.trim().toLowerCase();
+  const cards = [...document.querySelectorAll(".searchable")];
+  cards.forEach(card => {
+    card.hidden = !card.textContent.toLowerCase().includes(query);
+  });
+  updateEmptyMessage("games", "gamesNoResults");
+  updateEmptyMessage("movies", "moviesNoResults");
+}
+
+function updateEmptyMessage(sectionId, messageId) {
+  const section = document.getElementById(sectionId);
+  const visible = [...section.querySelectorAll(".searchable")].some(card => !card.hidden);
+  document.getElementById(messageId).style.display = visible ? "none" : "block";
+}
+
+function youtubeSearch(event) {
+  event.preventDefault();
+  const query = document.getElementById("youtubeQuery").value.trim();
+  if (!query) return;
+  const url = "https://www.youtube.com/results?search_query=" + encodeURIComponent(query);
+  window.open(url, "_blank", "noopener,noreferrer");
+}
+
+// Local Tic-Tac-Toe game
+let currentPlayer = "X";
+let cells = Array(9).fill("");
+let gameOver = false;
+const board = document.getElementById("board");
+
+function renderBoard() {
+  board.replaceChildren();
+  cells.forEach((value, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "cell";
+    button.textContent = value;
+    button.setAttribute("aria-label", `Cell ${index + 1}${value ? ": " + value : ""}`);
+    button.disabled = Boolean(value) || gameOver;
+    button.addEventListener("click", () => playMove(index));
+    board.appendChild(button);
+  });
+}
+
+function checkWinner() {
+  const winningLines = [
+    [0,1,2], [3,4,5], [6,7,8],
+    [0,3,6], [1,4,7], [2,5,8],
+    [0,4,8], [2,4,6]
+  ];
+  return winningLines.some(line => line.every(i => cells[i] === currentPlayer));
+}
+
+function playMove(index) {
+  if (gameOver || cells[index]) return;
+  cells[index] = currentPlayer;
+
+  if (checkWinner()) {
+    document.getElementById("gameStatus").textContent = `Player ${currentPlayer} wins!`;
+    gameOver = true;
+  } else if (cells.every(cell => cell !== "")) {
+    document.getElementById("gameStatus").textContent = "It's a draw!";
+    gameOver = true;
+  } else {
+    currentPlayer = currentPlayer === "X" ? "O" : "X";
+    document.getElementById("gameStatus").textContent = `Player ${currentPlayer}'s turn`;
+  }
+  renderBoard();
+}
+
+function resetGame() {
+  currentPlayer = "X";
+  cells = Array(9).fill("");
+  gameOver = false;
+  document.getElementById("gameStatus").textContent = "Player X's turn";
+  renderBoard();
+}
+
+renderBoard();
+
+// Polished page effects: reveal sections and a convenient back-to-top button.
+document.querySelectorAll("section, .game-box, main > .card").forEach(el => el.classList.add("reveal"));
+
+if ("IntersectionObserver" in window) {
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold:  0.12 });
+  document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
+} else {
+  document.querySelectorAll(".reveal").forEach(el => el.classList.add("is-visible"));
+}
+
+const backToTop = document.createElement("button");
+backToTop.id = "backToTop";
+backToTop.type = "button";
+backToTop.textContent = "↑";
+backToTop.setAttribute("aria-label", "Back to top");
+backToTop.title = "Back to top";
+backToTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+document.body.appendChild(backToTop);
+window.addEventListener("scroll", () => {
+  backToTop.classList.toggle("show", window.scrollY > 350);
+}, { passive: true });
+
+// Lightweight pointer glow, only on devices that support a fine pointer.
+if (window.matchMedia && window.matchMedia("(pointer: fine)").matches) {
+  document.querySelectorAll(".card").forEach(card => {
+    card.addEventListener("pointermove", event => {
+      const rect = card.getBoundingClientRect();
+      card.style.background = `radial-gradient(circle at ${event.clientX - rect.left}px ${event.clientY - rect.top}px, rgba(229,9,20,.12), var(--panel) 62%)`;
+    });
+    card.addEventListener("pointerleave", () => card.style.background = "");
+  });
+}
+
+</script>
+</body>
+</html>
